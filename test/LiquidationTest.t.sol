@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.19;
 
-import "../src/interfaces/DataTypes.sol";
 import "forge-std/Test.sol";
 import "../src/interfaces/IZeroLendPool.sol";
+import "../src/interfaces/IZeroLendOracle.sol";
+import "../src/interfaces/DataTypes.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract LiquidationTest is Test {
@@ -32,8 +33,9 @@ contract LiquidationTest is Test {
         vm.stopPrank();
         
         // Decrease collateral value
+        IZeroLendOracle oracle = pool.getPriceOracle();
         vm.mockCall(
-            address(pool.getPriceOracle()),
+            address(oracle),
             abi.encodeWithSelector(IZeroLendOracle.getAssetPrice.selector, WETH),
             abi.encode(1000) // Significantly lower price
         );
