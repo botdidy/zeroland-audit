@@ -6,7 +6,7 @@ import "../src/interfaces/IZeroLendPool.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract LiquidationTest is Test {
-    IZeroLendPool constant pool = IZeroLendPool(0xb5eb2c8D62f59D73488D8C8f567654fE6F0CAf1);
+    IZeroLendPool constant pool = IZeroLendPool(0x0b5eB2C8D62F59D73488D8c8f567654FE6F0caF1);
     
     address constant WETH = 0xA219439258ca9da29E9Cc4cE5596924745e12B93;
     address constant USDC = 0x176211869cA2b568f2A7D4EE941E073a821EE1ff;
