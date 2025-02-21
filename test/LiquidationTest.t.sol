@@ -49,8 +49,9 @@ contract LiquidationTest is Test {
         assertLt(totalCollateralBase, totalDebtBase, "User should be liquidated");
     }
 
-    function _getMaxBorrowAmount(address user, address asset) internal view returns (uint256) {
-        (uint256 totalCollateralBase, uint256 totalDebtBase, uint256 availableBorrowsBase, , , ) = pool.getUserAccountData(user);
+    function _getMaxBorrowAmount(address user, address asset) 
+    internal view returns (uint256) {
+        (_, _, uint256 availableBorrowsBase, , , ) = pool.getUserAccountData(user);
         uint256 assetPrice = pool.getPriceOracle().getAssetPrice(asset);
         return (availableBorrowsBase * 1e18) / assetPrice;
     }

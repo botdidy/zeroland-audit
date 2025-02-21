@@ -15,7 +15,7 @@ contract InterestRateTest is Test {
         vm.createSelectFork(vm.envString("LINEA_RPC_URL"));
     }
 
-    function testExtremeUtilization() public {
+    function testExtremeUtilization() public view {
         // Get current reserve data
         DataTypes.ReserveData memory reserveData = pool.getReserveData(WETH);
         IReserveInterestRateStrategy strategy = IReserveInterestRateStrategy(reserveData.interestRateStrategyAddress);

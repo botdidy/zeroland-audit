@@ -38,10 +38,10 @@ contract FlashLoanTest is Test {
     }
 
     function executeOperation(
-        address[] calldata assets,
-        uint256[] calldata amounts,
-        uint256[] calldata premiums,
-        address initiator,
+        address[] calldata _assets,
+        uint256[] calldata _amounts,
+        uint256[] calldata _premiums,
+        address _initiator,
         bytes calldata params
     ) external returns (bool) {
         // Attempt reentrancy
