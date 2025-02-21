@@ -18,6 +18,10 @@ library DataTypes {
         uint128 accruedToTreasury;
         uint128 unbacked;
         uint128 isolationModeTotalDebt;
+        uint256 totalAToken;
+        uint256 totalStableDebt;
+        uint256 totalVariableDebt;
+        uint256 averageStableBorrowRate;
     }
 
     struct CalculateInterestRatesParams {

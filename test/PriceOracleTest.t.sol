@@ -4,6 +4,7 @@ pragma solidity ^0.8.19;
 import "forge-std/Test.sol";
 import "../src/interfaces/IZeroLendOracle.sol";
 import "../src/interfaces/IZeroLendPool.sol";
+import "../src/interfaces/DataTypes.sol";
 
 contract PriceOracleTest is Test {
     IZeroLendOracle constant oracle = IZeroLendOracle(0x86B4Dc5f2cB7D8857e207a5E29E997B9333C53d0);

@@ -4,6 +4,7 @@ pragma solidity ^0.8.19;
 import "forge-std/Test.sol";
 import "../src/interfaces/IZeroLendPool.sol";
 import "../src/interfaces/IReserveInterestRateStrategy.sol";
+import "../src/interfaces/DataTypes.sol";
 
 contract InterestRateTest is Test {
     IZeroLendPool constant pool = IZeroLendPool(0x0b5eB2C8D62F59D73488D8c8f567654FE6F0caF1);
@@ -28,7 +29,7 @@ contract InterestRateTest is Test {
                 totalStableDebt: reserveData.totalStableDebt,
                 totalVariableDebt: reserveData.totalVariableDebt,
                 averageStableBorrowRate: reserveData.averageStableBorrowRate,
-                reserveFactor: reserveData.configuration.getReserveFactor(),
+                reserveFactor: reserveData.configuration & ((1 << 16) - 1), // Assuming reserve factor is stored in the first 16 bits
                 reserve: WETH,
                 aToken: reserveData.aTokenAddress
             })
