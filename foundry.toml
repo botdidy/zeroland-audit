@@ -8,7 +8,4 @@ remappings = [
 ]
 
 [rpc_endpoints]
-linea = "${LINEA_RPC_URL}"
-
-[etherscan]
-linea = { key = "${LINEASCAN_API_KEY}" }
+linea = "https://rpc.linea.build"

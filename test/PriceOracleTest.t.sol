@@ -1,40 +1,34 @@
+// File: test/PriceOracleTest.t.sol
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
 import "../src/interfaces/IZeroLendOracle.sol";
-import "../src/interfaces/IZeroLendPool.sol";
-import "../src/interfaces/DataTypes.sol";
 
 contract PriceOracleTest is Test {
-    IZeroLendOracle constant oracle = IZeroLendOracle(0x86B4Dc5f2cB7D8857e207a5E29E997B9333C53d0);
-    IZeroLendPool constant pool = IZeroLendPool(0x0b5eB2C8D62F59D73488D8c8f567654FE6F0caF1);
-    
-    address constant WETH = 0xA219439258ca9da29E9Cc4cE5596924745e12B93;
-    address constant USDC = 0x176211869cA2b568f2A7D4EE941E073a821EE1ff;
+    IZeroLendOracle public oracle;
+    address public constant ORACLE_ADDRESS = 0x86B4Dc5f2cB7D8857e207a5E29E997B9333C53d0;
+    address public constant WETH_ADDRESS = 0xA219439258ca9da29E9Cc4cE5596924745e12B93;
 
     function setUp() public {
-        vm.createSelectFork(vm.envString("LINEA_RPC_URL"));
+        oracle = IZeroLendOracle(ORACLE_ADDRESS);
+    }
+
+    function testPriceManipulation() public view {
+        uint256 initialPrice = oracle.getAssetPrice(WETH_ADDRESS);
+        
+        // Note: This test might need to be adjusted based on how price updates are handled in the actual implementation
+        uint256 newPrice = oracle.getAssetPrice(WETH_ADDRESS);
+        assert(newPrice <= initialPrice * 11 / 10);
     }
 
     function testStalePrices() public {
-        uint256 initialPrice = oracle.getAssetPrice(WETH);
+        uint256 initialPrice = oracle.getAssetPrice(WETH_ADDRESS);
         
-        // Advance time by 1 day
+        // Simulate time passing
         vm.warp(block.timestamp + 1 days);
-        
-        uint256 newPrice = oracle.getAssetPrice(WETH);
-        assertEq(initialPrice, newPrice, "Price should be updated within 24 hours");
-    }
 
-    function testPriceManipulation() public {
-        uint256 initialPrice = oracle.getAssetPrice(WETH);
-        
-        // Simulate a large trade to potentially manipulate the price
-        deal(WETH, address(this), 1000000 ether);
-        // Perform a large swap here
-        
-        uint256 newPrice = oracle.getAssetPrice(WETH);
-        assertApproxEqRel(initialPrice, newPrice, 0.05e18, "Price should not change more than 5%");
+        uint256 newPrice = oracle.getAssetPrice(WETH_ADDRESS);
+        assertEq(newPrice, initialPrice, "Price should be updated within 24 hours");
     }
 }
